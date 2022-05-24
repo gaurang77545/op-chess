@@ -82,80 +82,10 @@ class _ChessWithSwapState extends State<ChessWithSwap> {
     print('inserted row id: $id');
   }
 
-  void pickcolor(BuildContext context, bool top) {
-    String hexcode = '';
-    if (top == true) {
-      if (orientation == PlayerColor.white) {
-        hexcode = currsecondcolor;
-      } else {
-        hexcode = currfirstcolor;
-      }
-    } else {
-      if (orientation == PlayerColor.white) {
-        hexcode = currfirstcolor;
-      } else {
-        hexcode = currsecondcolor;
-      }
-    }
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: TextPlain('Pick a Color'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-              pickerColor: HexColor(hexcode),
-              enableAlpha: false,
-              showLabel: false,
-              onColorChanged: (color) {
-                setState(() {
-                  hexcode = '#${color.value.toRadixString(16)}';
-                  if (top == true) {
-                    if (orientation == PlayerColor.white) {
-                      setState(() {
-                        currsecondcolor = '#${color.value.toRadixString(16)}';
-                      });
-                    } else {
-                      setState(() {
-                        currfirstcolor = '#${color.value.toRadixString(16)}';
-                      });
-                    }
-                  } else {
-                    if (orientation == PlayerColor.white) {
-                      setState(() {
-                        currfirstcolor = '#${color.value.toRadixString(16)}';
-                      });
-                    } else {
-                      setState(() {
-                        currsecondcolor = '#${color.value.toRadixString(16)}';
-                      });
-                    }
-                  }
-
-                  hexcode = '#${color.value.toRadixString(16)}';
-                  setState(() {});
-                  controller.addListener(() {});
-                  print('HAHHAHA' + currfirstcolor);
-                });
-
-                print(hexcode);
-              }),
-        ),
-        actions: [
-          TextButtonSimple(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: TextPlain('Confirm'),
-          )
-        ],
-      ),
-    );
-  }
 
   @override
   void dispose() {
     super.dispose();
-    controller.removeListener(() {});
     _stopWatchTimerfirst.dispose();
     _stopWatchTimersecond.dispose();
   }
@@ -372,6 +302,44 @@ class _ChessWithSwapState extends State<ChessWithSwap> {
 
                                 //print(DateFormat.Hms().format(time));
                                 _insert(DateTime.now(), countmoves, time, winner);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: TextPlain("DRAW"),
+                                      content: TextPlain("Match is Drawed"),
+                                      actions: [
+                                        TextButtonSimple(
+                                          child: TextPlain("Play Again"),
+                                          onPressed: () {
+                                            controller.resetBoard();
+                                            if (orientation ==
+                                                PlayerColor.black) {
+                                              orientation = PlayerColor.white;
+                                            }
+                                            _stopWatchTimerfirst.onExecute
+                                                .add(StopWatchExecute.reset);
+                                            _stopWatchTimersecond.onExecute
+                                                .add(StopWatchExecute.reset);
+                                            _stopWatchTimerfirst.onExecute
+                                                .add(StopWatchExecute.start);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButtonSimple(
+                                          child: TextPlain("Back to Menu"),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HomePage()));
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
                               } else {
                                 setState(() {
                                   if (orientation == PlayerColor.white) {
