@@ -5,6 +5,7 @@ import 'package:op_chess_app/customwidgets/constants.dart';
 import 'package:op_chess_app/customwidgets/text.dart';
 import 'package:op_chess_app/customwidgets/textbutton.dart';
 import 'package:op_chess_app/historyhelper.dart';
+import 'package:op_chess_app/main.dart';
 import 'package:op_chess_app/menuscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -348,7 +349,7 @@ class _ChessWithSwapState extends State<ChessWithSwap> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        MenuScreen()));
+                                                        HomePage()));
                                           },
                                         )
                                       ],

@@ -3,6 +3,7 @@ import 'package:flutter_chess_board/flutter_chess_board.dart';
 import 'package:op_chess_app/customwidgets/constants.dart';
 import 'package:op_chess_app/customwidgets/text.dart';
 import 'package:op_chess_app/customwidgets/textbutton.dart';
+import 'package:op_chess_app/main.dart';
 import 'package:op_chess_app/menuscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -55,9 +56,7 @@ class _ChessWithoutSwapState extends State<ChessWithoutSwap> {
     getStringValuesSF(2);
     currfirstcolor = widget.currfirstcolor;
     currsecondcolor = widget.currsecondcolor;
-    controller.addListener(() {
-      controller.undoMove();
-    });
+    
     super.initState();
   }
 
@@ -86,7 +85,6 @@ class _ChessWithoutSwapState extends State<ChessWithoutSwap> {
   @override
   void dispose() {
     super.dispose();
-    controller.removeListener(() {});
     _stopWatchTimerfirst.dispose();
     _stopWatchTimersecond.dispose();
   }
@@ -271,7 +269,7 @@ class _ChessWithoutSwapState extends State<ChessWithoutSwap> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        MenuScreen()));
+                                                        HomePage()));
                                           },
                                         )
                                       ],
